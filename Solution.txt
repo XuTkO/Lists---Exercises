@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -9,27 +10,28 @@ public class Main {
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
 
-        String[] text = scanner.nextLine().split(" ");
-        while (true) {
-            if (text[0].equals("Delete")) {
-                numbers.removeAll(Collections.singleton(Integer.parseInt(text[1])));
-                text = scanner.nextLine().split(" ");
-            } else if (text[0].equals("Insert")) {
-                numbers.add(Integer.parseInt(text[2]), Integer.parseInt(text[1]));
-                text = scanner.nextLine().split(" ");
-            } else if (text[0].equals("Odd")) {
-                for (Integer nums : numbers) {
-                    if (nums % 2 == 1) {
-                        System.out.print(nums + " ");
-                    }
-                }break;
-            } else if (text[0].equals("Even")) {
-                for (Integer nums : numbers) {
-                    if (nums % 2 == 0) {
-                        System.out.print(nums + " ");
-                    }
-                }break;
+        int[] threeNumber = Arrays.stream(scanner.nextLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+
+
+        List<Integer> result = new ArrayList<Integer>(numbers.subList(0,threeNumber[0]));
+        result.remove(threeNumber[1]-1);
+
+        boolean isTrue = false;
+
+        for (int i = 0; i < result.size(); i++){
+            if(result.get(i)==threeNumber[2]){
+                isTrue=true;
             }
         }
+
+        if(isTrue==true){
+            System.out.println("YES!");
+        } else {
+            System.out.println("NO!");
+        }
+
+
     }
 }
