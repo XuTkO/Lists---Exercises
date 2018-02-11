@@ -2,7 +2,7 @@ import java.util.*;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class Main {
+public class DemoArray {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -15,23 +15,15 @@ public class Main {
                 .toArray();
 
 
-        List<Integer> result = new ArrayList<Integer>(numbers.subList(0,threeNumber[0]));
-        result.remove(threeNumber[1]-1);
-
-        boolean isTrue = false;
-
-        for (int i = 0; i < result.size(); i++){
-            if(result.get(i)==threeNumber[2]){
-                isTrue=true;
+        String answer = "NO!";
+        List<Integer> result = new ArrayList<Integer>(numbers.subList(0, threeNumber[0]));
+        result.subList(0, threeNumber[1]).clear();
+        for (int i = 0; i < result.size(); i++) {
+            if (result.get(i) == threeNumber[2]) {
+                answer = "YES!";
+                break;
             }
         }
-
-        if(isTrue==true){
-            System.out.println("YES!");
-        } else {
-            System.out.println("NO!");
-        }
-
-
+        System.out.println(answer);
     }
 }
