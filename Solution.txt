@@ -6,25 +6,39 @@ public class DemoArray {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        List<String> numbers = new ArrayList<>(Arrays.asList(scanner.nextLine().split(" ")));
+        List<Integer> numbers = Arrays.stream(scanner.nextLine().split(" "))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
 
-        long sum = 0;
+        List<Integer> specialNumbers = Arrays.stream(scanner.nextLine().split(" "))
+                        .map(Integer::parseInt)
+                        .collect(Collectors.toList());
 
-        List<String> reverseNums = new ArrayList<>();
+        int bombNumber = specialNumbers.get(0);
+        int power = specialNumbers.get(1);
 
-        for (int i = 0; i < numbers.size(); i++){
-            String num = numbers.get(i);
 
-            char[] arrayChar = num.toCharArray();
-            char[] reverseChar = new char[arrayChar.length];
-            for (int a = 0; a < arrayChar.length; a++){
-                reverseChar[a] = arrayChar[arrayChar.length-1-a];
+        while (numbers.contains(bombNumber)){
+
+            int possition = numbers.indexOf(bombNumber);
+            if(possition-power < 0 && possition + power >= numbers.size()){
+                numbers.clear();
+            } else if (possition-power < 0){
+                numbers.subList(0, 1+power+possition).clear();
+            } else if (possition + power >= numbers.size()){
+                numbers.subList(possition-power, power+2+numbers.size()-possition).clear();
+            } else {
+                numbers.subList(possition-power,2*power+1+(possition-power)).clear();
             }
 
-            sum += Long.parseLong(String.valueOf(reverseChar));
+        }
+        int sum = 0;
+
+        for (Integer nums:numbers) {
+            sum+=nums;
+
         }
 
-        System.out.println(sum);
-
-    }
+            System.out.println(sum);
+        }
 }
